@@ -30,11 +30,7 @@ for i in range(n):
     for j in range(m):
         print(f"Spieler {j + 1}")
 
-        if rand:
-            wert = random.randint(0, 10)
-        else:
-            wert = input("Wert: ")
-
+        wert = random.randint(0, 10) if rand else input("Wert: ")
         resultate[j][i] = int(wert)
 
         j += 1
