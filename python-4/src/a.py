@@ -6,7 +6,6 @@ import random
 
 m = 3 # Anzahl Spielende
 n = 5 # Anzahl Runden
-
 rand = True # Zufallszahlen einschalten
 
 # Listen bereitstellen
@@ -35,8 +34,8 @@ for i in range(n):
             wert = random.randint(0, 10)
         else:
             wert = input("Wert: ")
-        resultate[j][i] = int(wert)
 
+        resultate[j][i] = int(wert)
 
         j += 1
 
@@ -45,7 +44,6 @@ for i in range(n):
 # Summen berechnen
 
 for k, resultat in enumerate(resultate):
-    print(resultat)
     summen[k] = sum(resultat)
 
 # Resultat ausgeben
