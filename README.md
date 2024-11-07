@@ -6,4 +6,4 @@ Happy Coding!
 
 ---
 
-© 2024, [Creative-Commons-Lizenz](/LICENSE.md) / [www.nicolas-huber.ch](https://nicolas-huber.ch)
+© 2024, [Creative-Commons-Lizenz](/LICENSE.md) / [Nicolas Huber](https://nicolas-huber.ch).
