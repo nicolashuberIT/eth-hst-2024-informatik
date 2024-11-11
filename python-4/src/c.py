@@ -1,11 +1,21 @@
-import time
+# imports
+
 import os
+import time
 import random
 import matplotlib.pyplot as plt
 
+# settings
 
-def setup():
-  A = [[0 for x in range(42)] for y in range(42)]
+tend = 100
+delay = 1
+p = 0.3
+size = 52
+
+# functions
+
+def setup(size):
+  A = [[0 for x in range(size)] for y in range(size)]
   return A
 
 def output(grid, zeiteinheit):
@@ -37,18 +47,19 @@ def count(grid):
   return result
 
 def update(B, p):
+  C = B
   for i in range(1, len(B)-1):
     for j in range(1, len(B)-1):
       rand = random.random()
       if B[i][j] == 0:
         if B[i+1][j] > 0  and B[i+1][j] < 8 or B[i][j-1] > 0 and B[i][j-1] < 8 or B[i][j+1] > 0 and B[i][j+1] < 8 or B[i-1][j] > 0 and B[i-1][j] < 8:
           if rand <= p:
-            B[i][j] = 1
+            C[i][j] = 1
           else:
-            B[i][j] = 0
+            C[i][j] = 0
       elif B[i][j] > 0 and B[i][j] < 8:
-        B[i][j] += 1
-  return B
+        C[i][j] += 1
+  return C
 
 def visual(infiziert):
   plt.plot(infiziert)
@@ -56,17 +67,15 @@ def visual(infiziert):
   plt.xlabel('Zeit')
   plt.savefig("/Users/nicolas/Desktop/Git/Lara/eth-hst-2024-informatik/python-4/src/assets/visual.png")
 
-#Hauptprogramm
-tend = 100
-grid = setup()
-delay = 1
-p = 0.3
+# main program
+
+grid = setup(size)
+grid[random.randint(1, len(grid)-1)][random.randint(1, len(grid)-1)] = 1
+
 n_gesund = [0 for x in range(tend)]
 n_infiziert =[0 for x in range(tend)]
-n_genesen = [0 for x in range(tend)]
+n_genesen = [0 for x in range(tend)] 
 
-#grid[random.randint(1, len(grid)-1)][random.randint(1, len(grid)-1)] = 1
-grid[5][5] = 1
 output(grid, 0)
 
 for i in range(0, tend):
