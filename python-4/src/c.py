@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 # settings
 
-GRID_SIZE: int = 48
+GRID_SIZE: int = 48 
 END_TIME: int = 100
 ITERATION_DELAY: int = 1
 INFECTION_PROBABILITY: float = 0.3
@@ -95,7 +95,7 @@ def count(grid: List[List[int]]) -> List[int]:
     return result
 
 def update(grid: List[List[int]], probability: float) -> List[List[int]]:
-    updated_grid = [row[:] for row in grid]
+    updated_grid = grid
     rows, cols = len(grid), len(grid[0])
 
     for i in range(1, rows - 1):
