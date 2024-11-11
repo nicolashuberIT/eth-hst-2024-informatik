@@ -3,92 +3,127 @@
 import os
 import time
 import random
+from typing import List
 import matplotlib.pyplot as plt
 
 # settings
 
-tend = 100
-delay = 1
-p = 0.3
-size = 52
+GRID_SIZE: int = 48
+END_TIME: int = 100
+ITERATION_DELAY: int = 1
+INFECTION_PROBABILITY: float = 0.3
+PLOT_OUTPUT: str = "/Users/nicolas/Desktop/Git/Lara/eth-hst-2024-informatik/python-4/src/assets/visual.png"
 
 # functions
 
-def setup(size):
-  A = [[0 for x in range(size)] for y in range(size)]
-  return A
+def main(grid_size: int, end_time: int, infection_prob: float, delay: float, plot_output: str) -> None:
+    grid = setup(grid_size)
+    
+    # Seed an initial infection at a random location within the grid
+    initial_x, initial_y = random.randint(1, len(grid)-2), random.randint(1, len(grid)-2)
+    grid[initial_x][initial_y] = 1
 
-def output(grid, zeiteinheit):
-  print("Tag ", zeiteinheit)
-  for i in range(1, len(grid)-1):
-    for j in range(1, len(grid)-1):
-      if grid[i][j] > 0 and grid[i][j] < 8:
-        if j == len(grid)-2:
-          print(grid[i][j])
-        else:
-          print(grid[i][j], end=" ")
-      else:
-        if j == len(grid)-2:
-          print(" ")
-        else:
-          print(" ", end=" ")
-  print()
+    # Initialize lists to track the number of healthy, infected, and recovered cells over time
+    n_healthy: List[int] = [0] * end_time
+    n_infected: List[int] = [0] * end_time
+    n_recovered: List[int] = [0] * end_time
+
+    # Display initial state
+    output(grid, 0)
+
+    # Simulation loop
+    for t in range(end_time):
+        time.sleep(delay)
+        os.system('clear')
+
+        grid = update(grid, infection_prob)
+        output(grid, t + 1)
+
+        # Count cell types
+        healthy, infected, recovered = count(grid)
+        
+        # Store counts for visualization
+        n_healthy[t] = healthy
+        n_infected[t] = infected
+        n_recovered[t] = recovered
+
+        # Print summary of the current state
+        total_cells = (grid_size - 2) ** 2  # Exclude the borders
+        print(f"Gesund: \t{healthy}\t({round(healthy / total_cells * 100, 2)}%)")
+        print(f"Infiziert: \t{infected}\t({round(infected / total_cells * 100, 2)}%)")
+        print(f"Genesen: \t{recovered}\t({round(recovered / total_cells * 100, 2)}%)")
+    
+    visual(n_infected, plot_output)
+
+def setup(size: int) -> List[List[int]]:
+    return [[0] * size for _ in range(size)]
+
+def output(grid: List[List[int]], time_unit: int) -> None:
+    print(f"Day {time_unit}")
+
+    rows, cols = len(grid), len(grid[0])
+
+    for i in range(1, rows - 1):
+        row_output = []
+
+        for j in range(1, cols - 1):
+            if 0 < grid[i][j] < 8:
+                row_output.append(str(grid[i][j]))
+            else:
+                row_output.append(" ")
+
+        print(" ".join(row_output))
+
+    print()
  
-def count(grid):
-  result = [0,0,0]
-  for i in range(1, len(grid)-1):
-    for j in range(1, len(grid)-1):
-      if grid[i][j] == 0:
-        result[0] += 1
-      elif grid[i][j] > 0 and grid[i][j] < 8:
-        result[1] += 1
-      else:
-        result[2] += 1
-  return result
+def count(grid: List[List[int]]) -> List[int]:
+    result = [0, 0, 0]  # [count_zeros, count_between_1_and_7, count_8_or_more]
+    
+    rows, cols = len(grid), len(grid[0])
 
-def update(B, p):
-  C = B
-  for i in range(1, len(B)-1):
-    for j in range(1, len(B)-1):
-      rand = random.random()
-      if B[i][j] == 0:
-        if B[i+1][j] > 0  and B[i+1][j] < 8 or B[i][j-1] > 0 and B[i][j-1] < 8 or B[i][j+1] > 0 and B[i][j+1] < 8 or B[i-1][j] > 0 and B[i-1][j] < 8:
-          if rand <= p:
-            C[i][j] = 1
-          else:
-            C[i][j] = 0
-      elif B[i][j] > 0 and B[i][j] < 8:
-        C[i][j] += 1
-  return C
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
+            cell_value = grid[i][j]
+            
+            if cell_value == 0:
+                result[0] += 1
+            elif 1 <= cell_value < 8:
+                result[1] += 1
+            else:
+                result[2] += 1
 
-def visual(infiziert):
+    return result
+
+def update(grid: List[List[int]], probability: float) -> List[List[int]]:
+    updated_grid = [row[:] for row in grid]
+    rows, cols = len(grid), len(grid[0])
+
+    for i in range(1, rows - 1):
+        for j in range(1, cols - 1):
+            current_cell = grid[i][j]
+            rand_val = random.random()
+
+            if current_cell == 0:
+                neighbors = [
+                    grid[i+1][j],  # below
+                    grid[i][j-1],  # left
+                    grid[i][j+1],  # right
+                    grid[i-1][j]   # above
+                ]
+
+                if any(1 <= neighbor < 8 for neighbor in neighbors):
+                    updated_grid[i][j] = 1 if rand_val <= probability else 0
+
+            elif 1 <= current_cell < 8:
+                updated_grid[i][j] += 1
+
+    return updated_grid
+
+def visual(infiziert, output_path):
   plt.plot(infiziert)
   plt.ylabel('Anzahl Infizierte')
   plt.xlabel('Zeit')
-  plt.savefig("/Users/nicolas/Desktop/Git/Lara/eth-hst-2024-informatik/python-4/src/assets/visual.png")
+  plt.savefig(output_path)
 
-# main program
-
-grid = setup(size)
-grid[random.randint(1, len(grid)-1)][random.randint(1, len(grid)-1)] = 1
-
-n_gesund = [0 for x in range(tend)]
-n_infiziert =[0 for x in range(tend)]
-n_genesen = [0 for x in range(tend)] 
-
-output(grid, 0)
-
-for i in range(0, tend):
-  time.sleep(delay)
-  os.system('clear')
-  grid = update(grid, p)
-  output(grid, i+1)
-  result = count(grid)
-  n_gesund[i] = result[0]
-  n_infiziert[i] = result[1]
-  n_genesen[i] = result[2]
-  print("Gesund: \t", result[0],"\t(", round(result[0]/(len(grid)-2)**2 *100,2),"%)" )
-  print("Infiziert: \t", result[1],"\t(", round(result[1]/(len(grid)-2)**2 *100,2),"%)")
-  print("Genesen: \t", result[2],"\t(", round(result[2]/(len(grid)-2)**2 *100,2),"%)")
-
-visual(n_infiziert)
+if __name__ == "__main__":
+    main(GRID_SIZE, END_TIME, INFECTION_PROBABILITY, ITERATION_DELAY, PLOT_OUTPUT)
