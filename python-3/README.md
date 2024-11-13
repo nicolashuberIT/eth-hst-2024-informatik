@@ -236,3 +236,7 @@ Zum Abschluss ein Screenshot der Vergleichsresultate, welche du für die vollst�
 ![Image can be found at assets/image.png](/assets/image.png)
 
 Happy Coding :-)
+
+---
+
+© 2024, [Creative-Commons-Lizenz](/LICENSE.md) / [Nicolas Huber](https://nicolas-huber.ch).
