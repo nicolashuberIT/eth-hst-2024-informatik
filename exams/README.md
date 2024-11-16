@@ -10,7 +10,12 @@ Klicke [hier](/exams/algorithms/), um zu einer kurzen Auflistung einiger grundle
 
 ## Verschiedenes
 
-Klicke [hier](/exams/misc/), um zu einer Aufstellung verschiedener zusätzlicher Unterlagen zu gelangen, so z.B. 
+Klicke [hier](/exams/sql/), um zu einer kurzen SQL-Zusammenfassung zu gelangen.
+
+
+## Verschiedenes
+
+Klicke [hier](/exams/misc/), um zu einer Aufstellung verschiedener zusätzlicher Unterlagen zu gelangen.
 
 Viel Erfolg!
 
