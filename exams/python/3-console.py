@@ -1,16 +1,16 @@
-TXT_STRING: str = "test"
-NUM_FLOAT: float = 3.1
+txt_string: str = "test"
+num_float: float = 3.1
 
 # Einfache Ausgaben
 
 print("test")                   # >>> test
-print(TXT_STRING)               # >>> test
-print(NUM_FLOAT)                # >>> 3.1
+print(txt_string)               # >>> test
+print(num_float)                # >>> 3.1
 
 # Konkatenierte Ausgaben
 
-print("str: ", TXT_STRING)      # >>> str: test
-print(f"float: {NUM_FLOAT}")    # >>> float: 3.1 (sog. f-string)
+print("str: ", txt_string)      # >>> str: test
+print(f"float: {num_float}")    # >>> float: 3.1 (sog. f-string)
 
 # Sonderfälle
 
@@ -24,7 +24,7 @@ print("Ausgabe")                # >>> MeineAusgabe
 
 # Eingaben
 
-INPUT = int(input("Test:" ))    # erfdert Eingabe in Konsole und forciert INPUT: int
+input = int(input("Test:" ))    # erfdert Eingabe in Konsole und forciert INPUT: int
 
 # Konsole leeren
 
