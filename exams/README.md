@@ -8,7 +8,7 @@ Klicke [hier](/exams/python/), um zu einer kurzen Auflistung der wichtigsten Pyt
 
 Klicke [hier](/exams/algorithms/), um zu einer kurzen Auflistung einiger grundlegender Algorithmen zu gelangen.
 
-## Verschiedenes
+## SQL
 
 Klicke [hier](/exams/sql/), um zu einer kurzen SQL-Zusammenfassung zu gelangen.
 
