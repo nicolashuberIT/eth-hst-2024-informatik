@@ -1,17 +1,20 @@
 #Musterlösung mit GitHub Copilot erstellt und manuell angepasst
 
 import os
-import time
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 # Zustände
 EMPTY = "🪨"
+YOUNG_TREE = "🌱"
+GROWING_TREE = "🌿"
 TREE = "🌳"
 FIRE = "🔥"
+FIREBREAK = "🚧"
 
 # Simulationsparameter
-size = 50           # Grösse des Grids
+size = 100          # Grösse des Grids
 grow_start = 0.5    # Wahrscheinlichkeit, dass zu Beginn ein Baum steht
 p = 0.1             # Wahrscheinlichkeit, dass ein Baum wächst
 lightning = 0.005   # Wahrscheinlichkeit, dass ein Blitz einschlägt
@@ -19,12 +22,14 @@ tEnd = 100          # Anzahl der Zeiteinheiten
 
 def setup() -> np.ndarray:
     """Erstellt die Ausgangssituation."""
-    grid = np.random.choice([EMPTY, TREE], size=(size, size), p=[1-grow_start, grow_start])
+    firebreak_prob = 0.05
+    tree_prob = grow_start
+    empty_prob = 1 - tree_prob - firebreak_prob
+    grid = np.random.choice([EMPTY, TREE, FIREBREAK], size=(size, size), p=[empty_prob, tree_prob, firebreak_prob])
     return grid
 
 def print_grid(grid: np.ndarray) -> None:
     """Gibt die Matrix in der Konsole aus."""
-    time.sleep(0.5)
     os.system('clear')
     for row in grid:
         print(" ".join(row))
@@ -47,6 +52,10 @@ def update(grid: np.ndarray) -> np.ndarray:
     for x in range(size):
         for y in range(size):
             if grid[x, y] == EMPTY and np.random.random() < p:
+                new_grid[x, y] = YOUNG_TREE
+            elif grid[x, y] == YOUNG_TREE:
+                new_grid[x, y] = GROWING_TREE
+            elif grid[x, y] == GROWING_TREE:
                 new_grid[x, y] = TREE
             elif grid[x, y] == TREE:
                 if burn(grid, x, y) or np.random.random() < lightning:
@@ -81,4 +90,19 @@ plt.plot(range(1, tEnd + 1), fire_counts)
 plt.xlabel('Zeit')
 plt.ylabel('Anzahl brennender Zellen')
 plt.title('Waldbrand-Simulation')
+plt.show()
+
+# Live-Animation
+fig, ax = plt.subplots()
+
+def update_animation(frame):
+    global Grid
+    Grid = update(Grid)
+    ax.clear()
+    ax.imshow(Grid == TREE, cmap='Greens', interpolation='nearest')
+    ax.imshow(Grid == FIRE, cmap='Reds', interpolation='nearest', alpha=0.6)
+    ax.imshow(Grid == FIREBREAK, cmap='Blues', interpolation='nearest', alpha=0.3)
+    ax.set_title(f"Zeit: {frame}")
+
+ani = FuncAnimation(fig, update_animation, frames=tEnd, repeat=False)
 plt.show()
