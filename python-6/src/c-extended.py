@@ -1,4 +1,4 @@
-#Musterlösung mit GitHub Copilot erstellt und manuell angepasst
+#Musterlösung mit GitHub Copilot erstellt
 
 import os
 import numpy as np
