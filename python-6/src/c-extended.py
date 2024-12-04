@@ -1,4 +1,4 @@
-#Musterlösung mit GitHub Copilot erstellt
+# Musterlösung mit GitHub Copilot erstellt
 
 import os
 import numpy as np
@@ -14,26 +14,33 @@ FIRE = "🔥"
 FIREBREAK = "🚧"
 
 # Simulationsparameter
-size = 100          # Grösse des Grids
-grow_start = 0.5    # Wahrscheinlichkeit, dass zu Beginn ein Baum steht
-p = 0.1             # Wahrscheinlichkeit, dass ein Baum wächst
-lightning = 0.005   # Wahrscheinlichkeit, dass ein Blitz einschlägt
-tEnd = 100          # Anzahl der Zeiteinheiten
+size = 1000  # Grösse des Grids
+grow_start = 0.5  # Wahrscheinlichkeit, dass zu Beginn ein Baum steht
+p = 0.1  # Wahrscheinlichkeit, dass ein Baum wächst
+lightning = 0.005  # Wahrscheinlichkeit, dass ein Blitz einschlägt
+tEnd = 10000  # Anzahl der Zeiteinheiten
+
 
 def setup() -> np.ndarray:
     """Erstellt die Ausgangssituation."""
     firebreak_prob = 0.05
     tree_prob = grow_start
     empty_prob = 1 - tree_prob - firebreak_prob
-    grid = np.random.choice([EMPTY, TREE, FIREBREAK], size=(size, size), p=[empty_prob, tree_prob, firebreak_prob])
+    grid = np.random.choice(
+        [EMPTY, TREE, FIREBREAK],
+        size=(size, size),
+        p=[empty_prob, tree_prob, firebreak_prob],
+    )
     return grid
+
 
 def print_grid(grid: np.ndarray) -> None:
     """Gibt die Matrix in der Konsole aus."""
-    os.system('clear')
+    os.system("clear")
     for row in grid:
         print(" ".join(row))
     print()
+
 
 def burn(grid: np.ndarray, x: int, y: int) -> bool:
     """Bestimmt, ob eine Nachbarzelle brennt."""
@@ -45,6 +52,7 @@ def burn(grid: np.ndarray, x: int, y: int) -> bool:
                 if grid[x + dx, y + dy] == FIRE:
                     return True
     return False
+
 
 def update(grid: np.ndarray) -> np.ndarray:
     """Berechnet die Zustände für eine nächste Zeiteinheit."""
@@ -64,9 +72,11 @@ def update(grid: np.ndarray) -> np.ndarray:
                 new_grid[x, y] = EMPTY
     return new_grid
 
+
 def count(grid: np.ndarray) -> int:
     """Zählt die brennenden Kompartimente."""
     return np.sum(grid == FIRE)
+
 
 # Ausgangsmatrix
 Grid = setup()
@@ -87,22 +97,24 @@ for t in range(1, tEnd + 1):
 
 # Grafische Darstellung der Resultate über die Zeit
 plt.plot(range(1, tEnd + 1), fire_counts)
-plt.xlabel('Zeit')
-plt.ylabel('Anzahl brennender Zellen')
-plt.title('Waldbrand-Simulation')
+plt.xlabel("Zeit")
+plt.ylabel("Anzahl brennender Zellen")
+plt.title("Waldbrand-Simulation")
 plt.show()
 
 # Live-Animation
 fig, ax = plt.subplots()
 
+
 def update_animation(frame):
     global Grid
     Grid = update(Grid)
     ax.clear()
-    ax.imshow(Grid == TREE, cmap='Greens', interpolation='nearest')
-    ax.imshow(Grid == FIRE, cmap='Reds', interpolation='nearest', alpha=0.6)
-    ax.imshow(Grid == FIREBREAK, cmap='Blues', interpolation='nearest', alpha=0.3)
+    ax.imshow(Grid == TREE, cmap="Greens", interpolation="nearest")
+    ax.imshow(Grid == FIRE, cmap="Reds", interpolation="nearest", alpha=0.6)
+    ax.imshow(Grid == FIREBREAK, cmap="Blues", interpolation="nearest", alpha=0.3)
     ax.set_title(f"Zeit: {frame}")
+
 
 ani = FuncAnimation(fig, update_animation, frames=tEnd, repeat=False)
 plt.show()
