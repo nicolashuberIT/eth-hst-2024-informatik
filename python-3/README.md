@@ -32,9 +32,9 @@ Unter `/src` findest du alle Lösungen zu den C-Aufgaben aus dem Übungs-Dossier
 
 Ich habe versucht, die Aufgaben möglichst gemäss der Theorie zu lösen. Auf die Ausgaben in die Konsole solltest du sicher einen Kontrollblick werfen, da ich nicht genau weiss, wie diese in Code Expert validiert werden. Habe jeweils eine Form gewählt, die ähnlich zum Beispiel in der Aufgabenstellung ist.
 
-Der Code ist an manchen Stellen nicht so sauber. 🫣 Hoffe, das ist in Ordnung und nicht so schlimm. 😇
+Der Code ist an manchen Stellen nicht so sauber. Hoffe, das ist in Ordnung und nicht so schlimm.
 
-Hoffe, es stimmt alles. Bei Fragen einfach fragen. ❤️
+Hoffe, es stimmt alles. Bei Fragen einfach fragen.
 
 ### Übung C1
 
@@ -58,7 +58,7 @@ Beachte Kommentare im Code.
 
 Hier siehst du, wie ich diese Aufgabe auf meine Art gelöst hätte. Ich habe probiert, den Code sauber und übersichtlich zu halten. Der Code ist in Klassen organisiert, das Hauptprogramm findet sich in `main.py`.
 
-In `c4-extension.py` findest du eine Implementierung des Programms, die du 1:1 in Code Expert einfügen kannst. Professioneller ist die Umsetzung gemäss `main.py` unter `c4-extension/`. Klassen werden üblicherweise in separate Files ausgelagert und als Dependencies importiert. Du kennst dieses Konzept unter dem Begriff Object Oriented Programming. 🤓
+In `c4-extension.py` findest du eine Implementierung des Programms, die du 1:1 in Code Expert einfügen kannst. Professioneller ist die Umsetzung gemäss `main.py` unter `c4-extension/`. Klassen werden üblicherweise in separate Files ausgelagert und als Dependencies importiert. Du kennst dieses Konzept unter dem Begriff Object Oriented Programming.
 
 Die Struktur im Ordner `c4-extension` ist wie folgt:
 
