@@ -1,7 +1,7 @@
 # ETH Zürich - Informatik für HST - HS2024/25
 
 [![License](https://img.shields.io/badge/License-CCBYNCND-blue)](/LICENSE.md)
-[![Testing](https://img.shields.io/badge/License-None-red)](#/)
+[![Testing](https://img.shields.io/badge/Testing-None-red)](#/)
 
 Herzlich willkommen zu diesem Repository! Dieses enthält Lösungsvorschläge sowie Erklärungsversuche und Anhänge zu den Modulen vom Kurs `Informatik` für HST-Studierende der ETH Zürich (ETH Zürich, Informatik 2024, Python-Module).
 
